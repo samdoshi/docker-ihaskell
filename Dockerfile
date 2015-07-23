@@ -24,15 +24,15 @@ RUN apt-get update -q && \
 RUN pip install ipython[all]==$IPYTHON_VERSION && \
     python -c 'from IPython.external import mathjax; mathjax.install_mathjax()'
 
-RUN git clone http://www.github.com/gibiansky/IHaskell /tmp/ihaskell && \
-    cd /tmp/ihaskell && \
+RUN git clone http://www.github.com/gibiansky/IHaskell /ihaskell && \
+    cd /ihaskell && \
     git checkout -q $IHASKELL_SHA && \
     stack build --prefetch --dry-run && \
     stack install && \
     stack exec ihaskell -- install && \
     rm -r /root/.stack/indices
 
-CMD cd /tmp/ihaskell && \
+CMD cd /ihaskell && \
     stack exec ipython -- notebook \
         --ip=0.0.0.0 \
         --port=8888 \
