@@ -24,7 +24,8 @@ RUN apt-get update -q && \
 RUN pip install ipython[all]==$IPYTHON_VERSION && \
     python -c 'from IPython.external import mathjax; mathjax.install_mathjax()'
 
-RUN git clone http://www.github.com/gibiansky/IHaskell /ihaskell && \
+RUN stack install palette && \
+    git clone http://www.github.com/gibiansky/IHaskell /ihaskell && \
     cd /ihaskell && \
     git checkout -q $IHASKELL_SHA && \
     stack build --prefetch --dry-run && \
